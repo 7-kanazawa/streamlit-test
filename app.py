@@ -33,9 +33,11 @@ df_R4 = pd.read_csv('./data/自動車_常時監視測定地点_令和4年_add_lo
 df_R4 = df_R4[df_R4['測定地点の住所'].str.contains('千代田区|中央区|港区|板橋区|練馬区')]
 
 ###1.住所から緯度経度情報を取得する
+import random
 from geopy.geocoders import Nominatim
 def get_coordinates(address):
-  geolocator = Nominatim(user_agent="geo_v2")
+  user_agent = f"geo_{random.randint(1000, 9999)}"
+  geolocator = Nominatim(user_agent=user_agent)
   location = geolocator.geocode(address)
   if location is None:
     return np.nan, np.nan
