@@ -72,7 +72,7 @@ polygon, latitude, longitude = get_polygon_for_address(address)
 map = folium.Map(location=[latitude, longitude], zoom_start=15)
 
 def map_crime(map, df):
-  for index, row in tqdm(df.iterrows(), total=len(df)):
+  for index, row in df.iterrows():
     address = row['市区町丁']
     crime = row['総合計']
 
@@ -106,7 +106,7 @@ def map_crime(map, df):
 
 # 騒音データを地図にプロットする関数
 def map_noise(map, df_R4):
-  for index, row in tqdm(df_R4.iterrows(), total=len(df_R4)):
+  for index, row in df_R4.iterrows():
     # 住所情報
     address = row['測定地点の住所']
     road = row['評価対象道路①']
@@ -135,7 +135,7 @@ def map_noise(map, df_R4):
 # 街灯データを地図にプロットする関数
 def map_lights(map, df_gaitou):
     value = 15  # とりあえず街灯は固定値
-    for index, row in tqdm(df_gaitou.iterrows(), total=len(df_gaitou)):
+    for index, row in df_gaitou.iterrows():
         # 街灯のサークルをプロット（アイコンは無し）
         folium.Circle(
             location=[row['緯度'], row['経度']],
