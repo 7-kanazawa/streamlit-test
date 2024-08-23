@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 import cv2
 
-st.title("Image Converter")
+st.title("Image !!!!")
   
 uploaded_file = st.file_uploader('Upload your image file.')
   
