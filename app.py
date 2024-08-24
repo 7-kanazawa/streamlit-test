@@ -17,7 +17,7 @@ import streamlit as st  # 追加
 from streamlit_folium import folium_static  # 追加
 
 ###
-st.info("LIVING ENVIRONMENT SCORE α版")
+st.info("TOLES α版")
 
 ### Data Load
 df_hanzai = pd.read_csv('./data/R5_hanzai.csv', encoding='sjis')
