@@ -328,9 +328,16 @@ map = map_environmental_scores(map, df_score)
 folium_static(map, width=725, height=500)
 
 
-# 板橋区の市区町丁のDataFrameを表示
-st.markdown("### 可視化住所の詳細")
-st.dataframe(filtered_df.style.highlight_max(axis=0)) 
-
-st.dataframe(df_score.style.highlight_max(axis=0)) 
+### 選択した板橋区の市区町丁の詳細情報
+st.info("選択した住所の詳細")
+df_syousai= df_score[df_score['市区町丁'].isin(selected_cho)]
+# st.dataframe(df_syousai.style.highlight_max(axis=0)) #dfで表示
+# データを一行ずつ処理して表示
+for _, row in df_syousai.iterrows():
+    st.markdown(f"### 選択住所：{row['市区町丁']}")
+    st.markdown(f"- **住環境スコア**：{row['env_score_normal']} （選択した中での順位 {df_syousai['env_score_normal'].rank(ascending=False)[_]:.0f} 位）")
+    st.markdown(f"- **街灯の数**：{row['街灯の数']}")
+    st.markdown(f"- **騒音の平均値**：{row['騒音の平均値']}")
+    st.markdown(f"- **避難所の数**：{row['避難所の数']}")
+    st.markdown("---")  # 区切り線を追加
 
