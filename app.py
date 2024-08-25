@@ -322,22 +322,6 @@ col1, col2 = st.columns([2, 3])
 with col2:
     st.markdown("### 選択された住所の情報")
     st.dataframe(filtered_df.style.highlight_max(axis=0))  # スタイリング例
-st.markdown(
-    """
-    <style>
-    .stDataFrame { 
-        border: 2px solid #4CAF50;
-        border-radius: 10px;
-        background-color: #f5f5f5;
-    }
-    .stMarkdown {
-        font-family: 'Helvetica Neue', sans-serif;
-        color: #333;
-    }
-    </style>
-    """, unsafe_allow_html=True
-)
-
 
 
 
@@ -350,6 +334,6 @@ map = map_noise(map, df_R4)
 map = map_lights(map, df_gaitou)
 map = map_fixed_circles(map, df_hinanjo)
 map = map_environmental_scores(map, df_score)
-
-# Streamlitでマップを表示する
-folium_static(map, width=725, height=500)
+with col1:
+    # Streamlitでマップを表示する
+    folium_static(map, width=725, height=500)
