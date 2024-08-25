@@ -380,11 +380,11 @@ for idx, row in sorted_df.iterrows():
 #         streetlights = int(row['街灯の数']) if '街灯の数' in row and not pd.isna(row['街灯の数']) else 'データ無し'
 #         st.markdown(f"- **街灯の数**：{streetlights}")
 #         # 騒音の平均値を表示
-        noise_avg = row['騒音の平均値'] if '騒音の平均値' in row and not pd.isna(row['騒音の平均値']) else 'データ無し'
-        st.markdown(f"- **騒音の平均値(dB)**：{noise_avg}")
-        # 避難所の数を整数に変換
-        evacuation_centers = int(row['避難所の数']) if '避難所の数' in row and not pd.isna(row['避難所の数']) else 'データ無し'
-        st.markdown(f"- **避難所の数**：{evacuation_centers}")
-        st.markdown("---")
+#         noise_avg = row['騒音の平均値'] if '騒音の平均値' in row and not pd.isna(row['騒音の平均値']) else 'データ無し'
+#         st.markdown(f"- **騒音の平均値(dB)**：{noise_avg}")
+#         # 避難所の数を整数に変換
+#         evacuation_centers = int(row['避難所の数']) if '避難所の数' in row and not pd.isna(row['避難所の数']) else 'データ無し'
+#         st.markdown(f"- **避難所の数**：{evacuation_centers}")
+#         st.markdown("---")
 
 
