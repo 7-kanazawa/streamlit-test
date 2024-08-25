@@ -24,20 +24,11 @@ st.sidebar.image(
 
 ###タイトル
 #st.info("TOLES α版")
-st.markdown(
-    """
-    <style>
-    .centered-image {
-        display: flex;
-        justify-content: center;
-    }
-    </style>
-    <div class="centered-image">
-        <img src="data/TOLES.jpg" alt="TOLES" style="max-width: 100%; height: auto;">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+# 1列だけのカラムを作成
+col1, col2, col3 = st.columns([1, 4, 1])
+# 中央のカラムに画像を表示
+with col2:
+    st.image('data/TOLES.jpg', use_column_width=True)
 
 ### Data Load
 ##旧犯罪データ
