@@ -116,10 +116,10 @@ scaler = MinMaxScaler()
 # NaNを削除して1次元の配列に変換
 data = df_score['env_score'].dropna().values.reshape(-1, 1)
 df_values = scaler.fit_transform(data)
-# 標準化された値を元のデータフレームに格納
+# 元の処理
 df_score.loc[df_score['env_score'].dropna().index, "env_score_normal"] = df_values.flatten()
-# 小数点以下2桁に丸めてから100倍
-df_score["env_score_normal"] = df_score["env_score_normal"].round(2) * 100
+# 小数点以下2桁に丸めてから100倍し、整数に変換
+df_score["env_score_normal"] = (df_score["env_score_normal"].round(2) * 100).astype(int)
 
 ###1.住所から緯度経度情報を取得する
 import random
