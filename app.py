@@ -358,12 +358,12 @@ folium_static(map, width=None, height=500)#ワイド版でない時は725
 #         st.markdown("---")
 
 ###変更後
-import streamlit as st
-import pandas as pd
 # df_syousai を df_hanzai から必要な情報を取得するようにマージ
 df_syousai = df_score[df_score['市区町丁'].isin(selected_cho)]
 # df_hanzai からの情報を取得
 df_syousai = df_syousai.merge(df_hanzai[['市区町丁', '街灯の数', '騒音の平均値', '避難所の数']], on='市区町丁', how='left')
+st.dataframe(df_syousai.style.highlight_max(axis=0))
+
 # 住環境スコアの降順でソート
 sorted_df = df_syousai.sort_values(by='env_score_normal', ascending=False).reset_index(drop=True)
 # 選択件数を取得
