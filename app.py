@@ -272,18 +272,15 @@ import math
 ###スコア
 def map_environmental_scores(map, df_score):
     for index, row in df_score[df_score['市区町丁'].str.contains('板橋区')].iterrows():
-        # Calculate radius based on normalized score
-        value = row['env_score_normal'] * 200  # Adjust as needed
+        value = row['env_score_normal'] * 200 #適切な半径に変更
 
-        # Skip if latitude or longitude is NaN
         if math.isnan(row['LATITUDE']) or math.isnan(row['LONGITUDE']):
             continue
 
-        # Plot the circle on the map
         folium.Circle(
             location=[row['LATITUDE'], row['LONGITUDE']],
-            radius=value,  # Radius of the circle
-            color='',  # No outline for the circle
+            radius=value,
+            color='',
             fill=True,
             fill_color='blue',
             fill_opacity=0.3,
@@ -300,18 +297,17 @@ def map_environmental_scores(map, df_score):
 
 
 ###実際にマップを描画
-# (手法A)Streamlitの件数
+## (手法A)Streamlitの件数
 # map = map_crime(map, df_hanzai[:1])
 
-# (手法B)Streamlitでデータフレームの行数を選択
+## (手法B)Streamlitでデータフレームの行数を選択
 # num_records = st.slider("表示する犯罪記録の数を選択してください：", min_value=1, max_value=len(df_hanzai), value=1)
 # map = map_crime(map, df_hanzai[:num_records])
 
-# (手法C)Streamlitで市区町丁を選択
+## (手法C)Streamlitで市区町丁を選択
 # Streamlitでデータフレームの市区町丁のリストを取得
 filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 cho_list = filtered_df['市区町丁'].unique().tolist()
-#旧犯罪データ
 # cho_list = df_hanzai['市区町丁'].unique().tolist()
 selected_cho = st.multiselect(
     "可視化する住所を選択してください（α版は板橋区のみ）：",
@@ -319,6 +315,8 @@ selected_cho = st.multiselect(
     default=cho_list[:1]
 )
 filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
+
+###マッピング
 map = map_crime(map, filtered_df)
 map = map_noise(map, df_R4)
 map = map_lights(map, df_gaitou)
