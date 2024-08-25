@@ -357,43 +357,36 @@ for idx, row in sorted_df.iterrows():
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
 
-st.dataframe(df_hanzai)
-st.dataframe(df_syousai)
+
 ###変更後
 # df_syousai を df_hanzai から必要な情報を取得するようにマージ
 df_syousai = df_score[df_score['市区町丁'].isin(selected_cho)]
 df_syousai = df_syousai.merge(df_hanzai[['市区町丁', '街灯の数', '騒音の平均値', '避難所の数']], on='市区町丁', how='left', suffixes=('', '_hanzai'))
-
 # 住環境スコアの降順でソート
 sorted_df = df_syousai.sort_values(by='env_score_normal', ascending=False).reset_index(drop=True)
-
 # 選択件数を取得
 total_entries = len(sorted_df)
-
 # 詳細表示
 num_columns = 4
 columns = st.columns(num_columns)
-
 # データを一行ずつ処理して表示
 for idx, row in sorted_df.iterrows():
     col_idx = idx % num_columns  # 現在の列を計算
     with columns[col_idx]:  # 該当する列に内容を表示
         st.markdown(f"#### {row['市区町丁']}")
         st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
-        
         # 街灯の数を整数に変換
         streetlights = int(row['街灯の数_hanzai']) if '街灯の数_hanzai' in row and not pd.isna(row['街灯の数_hanzai']) else 'データ無し'
         st.markdown(f"- **街灯の数**：{streetlights}")
-        
         # 騒音の平均値を表示
         noise_avg = row['騒音の平均値_hanzai'] if '騒音の平均値_hanzai' in row and not pd.isna(row['騒音の平均値_hanzai']) else 'データ無し'
         st.markdown(f"- **騒音の平均値(dB)**：{noise_avg}")
-        
         # 避難所の数を整数に変換
         evacuation_centers = int(row['避難所の数_hanzai']) if '避難所の数_hanzai' in row and not pd.isna(row['避難所の数_hanzai']) else 'データ無し'
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
-        
         st.markdown("---")
 
+st.dataframe(df_hanzai)
+st.dataframe(df_syousai)
 
 
