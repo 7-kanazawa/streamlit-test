@@ -333,6 +333,9 @@ df_syousai= df_score[df_score['市区町丁'].isin(selected_cho)]
 # st.dataframe(df_syousai.style.highlight_max(axis=0)) #dfで表示
 # 住環境スコアの降順でソート
 sorted_df = df_syousai.sort_values(by='env_score_normal', ascending=False).reset_index(drop=True)
+# 選択件数を取得
+total_entries = len(sorted_df)
+# 詳細表示
 for idx, row in sorted_df.iterrows():
     st.markdown(f"## {row['市区町丁']}")
     st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
