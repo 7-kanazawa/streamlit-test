@@ -316,6 +316,12 @@ selected_cho = st.multiselect(
 )
 filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
 
+# 左右のカラムを作成
+col1, col2 = st.columns([2, 3])
+# フィルタリングされたDataFrameを右側のカラムに表示
+with col2:
+    st.markdown("### 選択された住所の情報")
+    st.dataframe(filtered_df.style.highlight_max(axis=0))  # スタイリング例
 ##（手法D）板橋区全選択※上限エラー
 # filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 
