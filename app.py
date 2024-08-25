@@ -312,7 +312,7 @@ def map_environmental_scores(map, df_score):
 fil_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 cho_list = fil_df['市区町丁'].unique().tolist()
 selected_cho = st.multiselect(
-    "可視化する住所を選択してください（α版は板橋区のみ）：",
+    "住所を選択してください（α版は板橋区のみ）：",
     cho_list,
     default=cho_list[:1]
 )
