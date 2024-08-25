@@ -48,6 +48,8 @@ def get_each_score(row):
   list_noise = row['noise_levels'][0]
   print("##########テスト###############")
   print(row['noise_levels'])
+  print(type(row['noise_levels']))
+  print("##########テスト###############")
   
   if isinstance(list_noise, float) and np.isnan(list_noise):
     avg_noise_level = np.nan
