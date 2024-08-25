@@ -13,6 +13,9 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 import streamlit as st
 from streamlit_folium import folium_static
 
+# ページ設定
+st.set_page_config(layout="wide")
+
 # サイドバーに画像を表示
 st.sidebar.image(
     'data/hanrei.jpg',
