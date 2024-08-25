@@ -48,25 +48,6 @@ def safe_literal_eval(value):
 
 ###0.住環境スコア化
 import ast
-# def get_each_score(row):
-#     list_lamp = ast.literal_eval(row['nearby_locat_街灯']) # 格納リストが文字列なのでリスト形式に変換
-#     len_hinanjo = len(row['nearby_locat_避難所'])
-#     list_noise = ast.literal_eval(row['noise_levels'])[0]
-#     print("##########テスト###############")
-#     print(list_noise)
-#     print(type(list_noise))
-#     print(sum(list_noise))
-#     print(len(list_noise))
-#     print("##########テスト###############")
-#     if list_noise and isinstance(list_noise, list) and len(list_noise) > 0:
-#         avg_noise_level = sum(list_noise) / len(list_noise)
-#     else:
-#         avg_noise_level = np.nan
-#     if isinstance(list_noise, float) and np.isnan(list_noise):
-#         avg_noise_level = np.nan
-#     else:
-#         avg_noise_level = sum(list_noise) / len(list_noise)
-#     return [len(list_lamp), avg_noise_level, len_hinanjo]
 def get_each_score(row):
     try:
         list_lamp = ast.literal_eval(row['nearby_locat_街灯'])
@@ -88,6 +69,20 @@ def get_each_score(row):
         avg_noise_level = np.nan
     return [len(list_lamp), avg_noise_level, len_hinanjo]
 df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+# ---------------------
+# 正規化
+# ---------------------
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+print(df_hanzai.shape)
+score_list = ['総合計','街灯の数','騒音の平均値','避難所の数']
+df_score = df_hanzai.replace(0, np.nan)
+for col in score_list:
+  scaler = MinMaxScaler()
+  # NaNを削除して1次元の配列に変換
+  data = df_score[col].dropna().values.reshape(-1, 1)
+  df_values = scaler.fit_transform(data)
+  # 標準化された値を元のデータフレームに格納
+  df_score.loc[df_score[col].dropna().index, f"{col}_normal"] = df_values.flatten()
 
 
 ###1.住所から緯度経度情報を取得する
