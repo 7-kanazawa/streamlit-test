@@ -24,11 +24,7 @@ st.sidebar.image(
 
 ###タイトル
 #st.info("TOLES α版")
-# 1列だけのカラムを作成
-col1, col2, col3 = st.columns([1, 4, 1])
-# 中央のカラムに画像を表示
-with col2:
-    st.image('data/TOLES.jpg', use_column_width=True)
+st.image('data/TOLES.jpg', use_column_width=True)
 
 ### Data Load
 ##旧犯罪データ
