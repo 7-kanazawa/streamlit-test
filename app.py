@@ -109,8 +109,6 @@ df_values = scaler.fit_transform(data)
 # 標準化された値を元のデータフレームに格納
 df_score.loc[df_score['env_score'].dropna().index, "env_score_normal"] = df_values.flatten()
 
-
-
 ###1.住所から緯度経度情報を取得する
 import random
 from geopy.geocoders import Nominatim
@@ -227,8 +225,8 @@ def map_lights(map, df_gaitou):
             radius=value,
             color='',  # サークルの囲い無し
             fill=True,
-            fill_color='red',
-            fill_opacity=0.3,
+            fill_color='gold',
+            fill_opacity=0.5,
         ).add_to(map)
 
         # 文字列を表示するカスタムアイコンを定義
