@@ -309,7 +309,10 @@ def map_environmental_scores(map, df_score):
 
 # (手法C)Streamlitで市区町丁を選択
 # Streamlitでデータフレームの市区町丁のリストを取得
-cho_list = df_hanzai['市区町丁'].unique().tolist()
+filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
+cho_list = filtered_df['市区町丁'].unique().tolist()
+#旧犯罪データ
+# cho_list = df_hanzai['市区町丁'].unique().tolist()
 selected_cho = st.multiselect(
     "可視化する住所を選択してください（α版は板橋区のみ）：",
     cho_list,
