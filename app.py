@@ -238,8 +238,66 @@ def map_lights(map, df_gaitou):
         #     icon=folium.Icon(color='yellow'),
         #     popup=html
         # ).add_to(map)
-  
     return map
+
+import folium
+
+# 避難所
+def map_fixed_circles(map, df_hinanjo):
+    for index, row in df_hinanjo.iterrows():
+        value = 80  # サークルの固定値
+
+        # サークルをプロット
+        folium.Circle(
+            location=[row['LATITUDE'], row['LONGITUDE']],
+            radius=value,
+            color='',  # サークルの囲い無し
+            fill=True,
+            fill_color='aqua',
+            fill_opacity=0.4,
+        ).add_to(map)
+
+        # 文字列を表示するカスタムアイコンを定義
+        html = f'<div style="font-size: 10pt; color: aqua;">サークル半径 : {value}</div>'
+        folium.Marker(
+            [row['LATITUDE'], row['LONGITUDE']],
+            icon=folium.Icon(color='lightblue'),
+            popup=html
+        ).add_to(map)
+    return map
+
+import folium
+import math
+
+###スコア
+def map_environmental_scores(map, df_score):
+    for index, row in df_score[df_score['市区町丁'].str.contains('板橋区')].iterrows():
+        # Calculate radius based on normalized score
+        value = row['env_score_normal'] * 200  # Adjust as needed
+
+        # Skip if latitude or longitude is NaN
+        if math.isnan(row['LATITUDE']) or math.isnan(row['LONGITUDE']):
+            continue
+
+        # Plot the circle on the map
+        folium.Circle(
+            location=[row['LATITUDE'], row['LONGITUDE']],
+            radius=value,  # Radius of the circle
+            color='',  # No outline for the circle
+            fill=True,
+            fill_color='blue',
+            fill_opacity=0.3,
+        ).add_to(map)
+
+        # Add a popup with additional information (optional)
+        html = f'<div style="font-size: 10pt; color: blue;">Score: {row["env_score_normal"]}</div>'
+        folium.Marker(
+            [row['LATITUDE'], row['LONGITUDE']],
+            icon=folium.Icon(color='blue'),
+            popup=html
+        ).add_to(map)
+    return map
+
 
 ###実際にマップを描画
 # (手法A)Streamlitの件数
@@ -253,7 +311,7 @@ def map_lights(map, df_gaitou):
 # Streamlitでデータフレームの市区町丁のリストを取得
 cho_list = df_hanzai['市区町丁'].unique().tolist()
 selected_cho = st.multiselect(
-    "可視化する住所を選択してください（α版は千代田区、板橋区のみ）：",
+    "可視化する住所を選択してください（α版は板橋区のみ）：",
     cho_list,
     default=cho_list[:1]
 )
@@ -261,6 +319,8 @@ filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
 map = map_crime(map, filtered_df)
 map = map_noise(map, df_R4)
 map = map_lights(map, df_gaitou)
+map = map_fixed_circles(map, df_hinanjo)
+map = map_environmental_scores(map, df_score)
 
 # Streamlitでマップを表示する
 folium_static(map, width=725, height=500)
