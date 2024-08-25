@@ -49,6 +49,7 @@ def get_each_score(row):
   print("##########テスト###############")
   print(row['noise_levels'])
   print(type(row['noise_levels']))
+  print(type(ast.literal_eval(row['noise_levels'])))
   print("##########テスト###############")
   
   if isinstance(list_noise, float) and np.isnan(list_noise):
