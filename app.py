@@ -331,3 +331,6 @@ folium_static(map, width=725, height=500)
 # 板橋区の市区町丁のDataFrameを表示
 st.markdown("### 可視化住所の詳細")
 st.dataframe(filtered_df.style.highlight_max(axis=0)) 
+
+st.dataframe(df_score.style.highlight_max(axis=0)) 
+
