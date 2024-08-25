@@ -69,6 +69,7 @@ def get_each_score(row):
         avg_noise_level = np.nan
     return [len(list_lamp), avg_noise_level, len_hinanjo]
 df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+
 # ---------------------
 # 正規化
 # ---------------------
@@ -83,6 +84,31 @@ for col in score_list:
   df_values = scaler.fit_transform(data)
   # 標準化された値を元のデータフレームに格納
   df_score.loc[df_score[col].dropna().index, f"{col}_normal"] = df_values.flatten()
+    
+# Nanがあるとenv_scoreが計算できていないので0で欠損値を補間
+# score_normal_list = ['総合計_normal','街灯の数_normal','騒音の平均値_normal']
+score_normal_list = ['総合計_normal','街灯の数_normal','騒音の平均値_normal','避難所の数_normal']
+df_score[score_normal_list] = df_score[score_normal_list].fillna(0)
+
+# =======================================================================================
+# パラメータ
+# =======================================================================================
+WEIGHT_CRIME = -0.3
+WEIGHT_NOISE = -0.3
+WEIGHT_LAMP = 0.3
+WEIGHT_ESCAPE = 0.5
+df_score['env_score'] = df_score['総合計_normal'] * WEIGHT_CRIME + df_score['騒音の平均値_normal'] * WEIGHT_NOISE + df_score['街灯の数_normal'] * WEIGHT_LAMP
+
+# ----------------------------------------
+# スコアがマイナスになるので正規化しておく
+# ----------------------------------------
+scaler = MinMaxScaler()
+# NaNを削除して1次元の配列に変換
+data = df_score['env_score'].dropna().values.reshape(-1, 1)
+df_values = scaler.fit_transform(data)
+# 標準化された値を元のデータフレームに格納
+df_score.loc[df_score['env_score'].dropna().index, "env_score_normal"] = df_values.flatten()
+
 
 
 ###1.住所から緯度経度情報を取得する
