@@ -52,15 +52,14 @@ def get_each_score(row):
     list_lamp = ast.literal_eval(row['nearby_locat_街灯']) # 格納リストが文字列なのでリスト形式に変換
     len_hinanjo = len(row['nearby_locat_避難所'])
     list_noise = ast.literal_eval(row['noise_levels'])[0]
+    print("##########テスト###############")
+    print(list_noise)
+    print("##########テスト###############")
     if list_noise and isinstance(list_noise, list) and len(list_noise) > 0:
         avg_noise_level = sum(list_noise) / len(list_noise)
     else:
         avg_noise_level = np.nan
-    print("##########テスト###############")
-    print(row['noise_levels'])
-    print(type(row['noise_levels']))
-    print(type(ast.literal_eval(row['noise_levels'])))
-    print("##########テスト###############")
+
     if isinstance(list_noise, float) and np.isnan(list_noise):
         avg_noise_level = np.nan
     else:
