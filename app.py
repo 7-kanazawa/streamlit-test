@@ -61,13 +61,11 @@ def get_each_score(row):
     print(type(row['noise_levels']))
     print(type(ast.literal_eval(row['noise_levels'])))
     print("##########テスト###############")
-  
-  if isinstance(list_noise, float) and np.isnan(list_noise):
-    avg_noise_level = np.nan
-  else:
-    avg_noise_level = sum(list_noise) / len(list_noise)
-  return [len(list_lamp), avg_noise_level, len_hinanjo]
-  # return [len(list_lamp), avg_noise_level]
+    if isinstance(list_noise, float) and np.isnan(list_noise):
+        avg_noise_level = np.nan
+    else:
+        avg_noise_level = sum(list_noise) / len(list_noise)
+    return [len(list_lamp), avg_noise_level, len_hinanjo]
 df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
 
 
