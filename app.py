@@ -326,7 +326,7 @@ map = map_lights(map, df_gaitou)
 map = map_fixed_circles(map, df_hinanjo)
 map = map_environmental_scores(map, df_score)
 # Streamlitでマップを表示する
-folium_static(map, width=725, height=500)
+folium_static(map, width=1450, height=500)
 
 
 ### 選択した板橋区の市区町丁の詳細情報
