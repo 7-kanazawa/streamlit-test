@@ -357,6 +357,8 @@ for idx, row in sorted_df.iterrows():
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
 
+st.dataframe(df_hanzai)
+st.dataframe(df_syousai)
 
 ###変更後
 # df_syousai を df_hanzai から必要な情報を取得するようにマージ
