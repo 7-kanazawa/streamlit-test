@@ -358,6 +358,8 @@ folium_static(map, width=None, height=500)#ワイド版でない時は725
 #         st.markdown("---")
 
 ###変更後
+import streamlit as st
+import pandas as pd
 # df_syousai を df_hanzai から必要な情報を取得するようにマージ
 df_syousai = df_score[df_score['市区町丁'].isin(selected_cho)]
 # df_hanzai からの情報を取得
@@ -375,10 +377,15 @@ for idx, row in sorted_df.iterrows():
     with columns[col_idx]:  # 該当する列に内容を表示
         st.markdown(f"#### {row['市区町丁']}")
         st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
-        streetlights = int(row['街灯の数']) if not pd.isna(row['街灯の数']) else 'データ無し'
+        # 街灯の数を整数に変換
+        streetlights = int(row['街灯の数']) if '街灯の数' in row and not pd.isna(row['街灯の数']) else 'データ無し'
         st.markdown(f"- **街灯の数**：{streetlights}")
-        st.markdown(f"- **騒音の平均値(dB)**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
-        evacuation_centers = int(row['避難所の数']) if not pd.isna(row['避難所の数']) else 'データ無し'
+        # 騒音の平均値を表示
+        noise_avg = row['騒音の平均値'] if '騒音の平均値' in row and not pd.isna(row['騒音の平均値']) else 'データ無し'
+        st.markdown(f"- **騒音の平均値(dB)**：{noise_avg}")
+        # 避難所の数を整数に変換
+        evacuation_centers = int(row['避難所の数']) if '避難所の数' in row and not pd.isna(row['避難所の数']) else 'データ無し'
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
+
 
