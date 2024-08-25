@@ -22,7 +22,7 @@ st.info("TOLES α版")
 # # df_hanzai = df_hanzai.iloc[:5172]
 # # df_hanzai = df_hanzai.iloc[:116]#千代田区のみ
 # df_hanzai = df_hanzai[df_hanzai['市区町丁'].str.contains('千代田区|板橋区')]#252
-df_hanzai = df_hanzai[~df_hanzai['市区町丁'].isin(["区計","市計"])][['市区町丁','総合計']]
+# df_hanzai = df_hanzai[~df_hanzai['市区町丁'].isin(["区計","市計"])][['市区町丁','総合計']]
 
 ##犯罪データ変更後
 df_hanzai.to_csv('./data/df_hanzai_add_nearby_loc_add_hinanjo.csv', encoding='cp932', index=False)
