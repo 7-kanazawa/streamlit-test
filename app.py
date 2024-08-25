@@ -279,7 +279,7 @@ import math
 ###スコア
 def map_environmental_scores(map, df_score):
     for index, row in df_score[df_score['市区町丁'].str.contains('板橋区')].iterrows():
-        value = row['env_score_normal'] * 200 #適切な半径に変更
+        value = row['env_score_normal'] * 2 #適切な半径に変更
 
         if math.isnan(row['LATITUDE']) or math.isnan(row['LONGITUDE']):
             continue
@@ -353,7 +353,7 @@ for idx, row in sorted_df.iterrows():
         streetlights = int(row['街灯の数']) if not pd.isna(row['街灯の数']) else 'データ無し'
         st.markdown(f"- **街灯の数**：{streetlights}")
         st.markdown(f"- **騒音の平均値(dB)**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
-        sevacuation_centers = int(row['避難所の数']) if not pd.isna(row['避難所の数']) else 'データ無し'
+        evacuation_centers = int(row['避難所の数']) if not pd.isna(row['避難所の数']) else 'データ無し'
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
 
