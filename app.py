@@ -282,7 +282,7 @@ def map_environmental_scores(map, df_score):
         ).add_to(map)
 
         # Add a popup with additional information (optional)
-        html = f'<div style="font-size: 10pt; color: blue;">Score: {row["env_score_normal"]}</div>'
+        html = f'<div style="font-size: 10pt; color: blue;">スコア: {row["env_score_normal"]}</div>'
         folium.Marker(
             [row['LATITUDE'], row['LONGITUDE']],
             icon=folium.Icon(color='blue'),
