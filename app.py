@@ -45,7 +45,7 @@ import ast
 def get_each_score(row):
   list_lamp = ast.literal_eval(row['nearby_locat_街灯']) # 格納リストが文字列なのでリスト形式に変換
   len_hinanjo = len(row['nearby_locat_避難所'])
-  list_noise = row['noise_levels'][0]
+  list_noise = ast.literal_eval(row['noise_levels'])[0]
   print("##########テスト###############")
   print(row['noise_levels'])
   print(type(row['noise_levels']))
