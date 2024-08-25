@@ -20,8 +20,8 @@ st.sidebar.image(
 )
 
 ###タイトル
-# st.info("TOLES α版")
-st.image('data/hanrei.jpg',)
+#st.info("TOLES α版")
+st.image('data/TOLES.jpg',)
 
 ### Data Load
 ##旧犯罪データ
