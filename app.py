@@ -24,7 +24,7 @@ st.sidebar.image(
 
 ###タイトル
 #st.info("TOLES α版")
-st.image('data/TOLES.jpg')
+st.image('data/TOLES.svg')
 
 ### Data Load
 ##旧犯罪データ
