@@ -329,7 +329,7 @@ map = map_lights(map, df_gaitou)
 map = map_fixed_circles(map, df_hinanjo)
 map = map_environmental_scores(map, df_score)
 # Streamlitでマップを表示する
-folium_static(map, width=1450, height=500)
+folium_static(map, width=None, height=500)#ワイド版でない時は725
 
 
 ### 選択した板橋区の市区町丁の詳細情報
@@ -340,11 +340,23 @@ sorted_df = df_syousai.sort_values(by='env_score_normal', ascending=False).reset
 # 選択件数を取得
 total_entries = len(sorted_df)
 # 詳細表示
+# for idx, row in sorted_df.iterrows():
+#     st.markdown(f"#### {row['市区町丁']}")
+#     st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
+#     st.markdown(f"- **街灯の数**：{row['街灯の数'] if not pd.isna(row['街灯の数']) else 'データ無し'}")
+#     st.markdown(f"- **騒音の平均値**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
+#     st.markdown(f"- **避難所の数**：{row['避難所の数'] if not pd.isna(row['避難所の数']) else 'データ無し'}")
+#     st.markdown("---") 
+num_columns = 5
+columns = st.columns(num_columns)
+# データを一行ずつ処理して表示
 for idx, row in sorted_df.iterrows():
-    st.markdown(f"#### {row['市区町丁']}")
-    st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
-    st.markdown(f"- **街灯の数**：{row['街灯の数'] if not pd.isna(row['街灯の数']) else 'データ無し'}")
-    st.markdown(f"- **騒音の平均値**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
-    st.markdown(f"- **避難所の数**：{row['避難所の数'] if not pd.isna(row['避難所の数']) else 'データ無し'}")
-    st.markdown("---") 
+    col_idx = idx % num_columns  # 現在の列を計算
+    with columns[col_idx]:  # 該当する列に内容を表示
+        st.markdown(f"#### {row['市区町丁']}")
+        st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
+        st.markdown(f"- **街灯の数**：{row['街灯の数'] if not pd.isna(row['街灯の数']) else 'データ無し'}")
+        st.markdown(f"- **騒音の平均値**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
+        st.markdown(f"- **避難所の数**：{row['避難所の数'] if not pd.isna(row['避難所の数']) else 'データ無し'}")
+        st.markdown("---")
 
