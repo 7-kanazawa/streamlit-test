@@ -24,7 +24,20 @@ st.sidebar.image(
 
 ###タイトル
 #st.info("TOLES α版")
-st.image('data/TOLES.jpg',)
+st.markdown(
+    """
+    <style>
+    .centered-image {
+        display: flex;
+        justify-content: center;
+    }
+    </style>
+    <div class="centered-image">
+        <img src="data/TOLES.jpg" alt="TOLES" style="max-width: 100%; height: auto;">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 ### Data Load
 ##旧犯罪データ
