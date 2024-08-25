@@ -54,6 +54,9 @@ def get_each_score(row):
     list_noise = ast.literal_eval(row['noise_levels'])[0]
     print("##########テスト###############")
     print(list_noise)
+    print(type(list_noise))
+    print(sum(list_noise))
+    print(len(list_noise))
     print("##########テスト###############")
     if list_noise and isinstance(list_noise, list) and len(list_noise) > 0:
         avg_noise_level = sum(list_noise) / len(list_noise)
