@@ -1,7 +1,6 @@
 import pandas as pd
 import numpy as np
 import folium
-
 import matplotlib
 import matplotlib.pyplot as plt
 import japanize_matplotlib
@@ -9,30 +8,34 @@ import seaborn as sns
 sns.set_style('darkgrid')
 sns.set(font="IPAexGothic")
 matplotlib.style.use('ggplot')
-
 import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
+import streamlit as st
+from streamlit_folium import folium_static
 
-import streamlit as st  # 追加
-from streamlit_folium import folium_static  # 追加
-
-###
+###タイトル
 st.info("TOLES α版")
 
 ### Data Load
-df_hanzai = pd.read_csv('./data/R5_hanzai.csv', encoding='sjis')
-# df_hanzai = df_hanzai.iloc[:5172]
-# df_hanzai = df_hanzai.iloc[:116]#千代田区のみ
-df_hanzai = df_hanzai[df_hanzai['市区町丁'].str.contains('千代田区|板橋区')]#252
+##旧犯罪データ
+# df_hanzai = pd.read_csv('./data/R5_hanzai.csv', encoding='sjis')
+# # df_hanzai = df_hanzai.iloc[:5172]
+# # df_hanzai = df_hanzai.iloc[:116]#千代田区のみ
+# df_hanzai = df_hanzai[df_hanzai['市区町丁'].str.contains('千代田区|板橋区')]#252
 df_hanzai = df_hanzai[~df_hanzai['市区町丁'].isin(["区計","市計"])][['市区町丁','総合計']]
 
+##犯罪データ変更後
+df_hanzai.to_csv('./data/df_hanzai_add_nearby_loc_add_hinanjo.csv', encoding='cp932', index=False)
+
+##街灯データ
 df_gaitou = pd.read_csv('./data/LED_街灯_2021作成データ.csv', encoding='sjis')
 df_gaitou = df_gaitou.iloc[:4000:5]#全4121件、処理重いので一旦800件、板橋区のデータのみ
 
+##騒音データ
 df_R4 = pd.read_csv('./data/自動車_常時監視測定地点_令和4年_add_location.csv', encoding='cp932')
 df_R4 = df_R4[df_R4['測定地点の住所'].str.contains('千代田区|中央区|港区|板橋区|練馬区')]
 
-# 板橋区_避難所データ
+## 板橋区_避難所データ
 df_hinanjo = pd.read_csv('./data/板橋区_避難所データ.csv', encoding='cp932')
 df_hinanjo = df_hinanjo[['施設名','緯度','経度']]
 df_hinanjo = df_hinanjo.rename({'緯度':'LATITUDE', '経度':'LONGITUDE'}, axis=1)
