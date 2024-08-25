@@ -357,6 +357,8 @@ for idx, row in sorted_df.iterrows():
         st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
 
+st.dataflame(df_hanzai)
+st.dataflame(df_syousai)
 ###変更後
 # # df_syousai を df_hanzai から必要な情報を取得するようにマージ
 # df_syousai = df_score[df_score['市区町丁'].isin(selected_cho)]
