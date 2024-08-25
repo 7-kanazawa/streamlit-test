@@ -301,17 +301,17 @@ def map_environmental_scores(map, df_score):
 
 ## (手法C)Streamlitで市区町丁を選択
 # Streamlitでデータフレームの市区町丁のリストを取得（板橋区のみ選択）
-# filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
-# cho_list = filtered_df['市区町丁'].unique().tolist()
-# selected_cho = st.multiselect(
-#     "可視化する住所を選択してください（α版は板橋区のみ）：",
-#     cho_list,
-#     default=cho_list[:1]
-# )
-# filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
+fil_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
+cho_list = fil_df['市区町丁'].unique().tolist()
+selected_cho = st.multiselect(
+    "可視化する住所を選択してください（α版は板橋区のみ）：",
+    cho_list,
+    default=cho_list[:1]
+)
+filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
 
-##（手法D）板橋区全選択
-filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
+##（手法D）板橋区全選択※上限エラー
+# filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 
 ###マッピング
 map = map_crime(map, filtered_df)
