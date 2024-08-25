@@ -141,16 +141,20 @@ def get_polygon_for_address(address):
   return polygon, latitude, longitude
 
 ### 4. ポリゴン情報を取得
-# サンプル位置情報
+# サンプルスタート位置情報
 address = "東京都千代田区丸の内１丁目"
 # 住所を入力してMAPを移動
 # address = st.text_input("MAP上で移動したい住所を入力してください：", "千代田区麹町４丁目")
-
 # サンプル位置情報のポリゴン情報を取得
 polygon, latitude, longitude = get_polygon_for_address(address)
-
 # サンプル位置情報をスタート位置としてMapを作成
-map = folium.Map(location=[latitude, longitude], zoom_start=15)
+# map = folium.Map(location=[latitude, longitude], zoom_start=15)
+
+###スタート位置を板橋区に変更
+start_lat = df_score[df_score['市区町丁'].str.contains('板橋区')]['LATITUDE'].values[0]
+start_long = df_score[df_score['市区町丁'].str.contains('板橋区')]['LONGITUDE'].values[0]
+map = folium.Map(location=[start_lat, start_long], zoom_start=16) # zoom:大きいと解像度が高い
+
 
 def map_crime(map, df):
   for index, row in df.iterrows():
