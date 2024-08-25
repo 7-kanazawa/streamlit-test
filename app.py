@@ -14,10 +14,8 @@ import streamlit as st
 from streamlit_folium import folium_static
 
 # サイドバーに画像を表示
-st.sidebar.info("凡例")
 st.sidebar.image(
     'data/hanrei.jpg',
-    caption='環境スコア', 
     use_column_width=True
 )
 
