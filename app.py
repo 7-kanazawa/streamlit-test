@@ -40,6 +40,21 @@ df_hinanjo = pd.read_csv('./data/板橋区_避難所データ.csv', encoding='cp
 df_hinanjo = df_hinanjo[['施設名','緯度','経度']]
 df_hinanjo = df_hinanjo.rename({'緯度':'LATITUDE', '経度':'LONGITUDE'}, axis=1)
 
+###0.住環境スコア化
+import ast
+def get_each_score(row):
+  list_lamp = ast.literal_eval(row['nearby_locat_街灯']) # 格納リストが文字列なのでリスト形式に変換
+  len_hinanjo = len(row['nearby_locat_避難所'])
+  list_noise = row['noise_levels'][0]
+  if isinstance(list_noise, float) and np.isnan(list_noise):
+    avg_noise_level = np.nan
+  else:
+    avg_noise_level = sum(list_noise) / len(list_noise)
+  return [len(list_lamp), avg_noise_level, len_hinanjo]
+  # return [len(list_lamp), avg_noise_level]
+df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.progress_apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+
+
 ###1.住所から緯度経度情報を取得する
 import random
 from geopy.geocoders import Nominatim
