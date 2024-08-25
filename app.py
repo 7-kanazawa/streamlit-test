@@ -118,6 +118,8 @@ data = df_score['env_score'].dropna().values.reshape(-1, 1)
 df_values = scaler.fit_transform(data)
 # 標準化された値を元のデータフレームに格納
 df_score.loc[df_score['env_score'].dropna().index, "env_score_normal"] = df_values.flatten()
+# 小数点以下2桁に丸めてから100倍
+df_score["env_score_normal"] = df_score["env_score_normal"].round(2) * 100
 
 ###1.住所から緯度経度情報を取得する
 import random
@@ -348,8 +350,10 @@ for idx, row in sorted_df.iterrows():
     with columns[col_idx]:  # 該当する列に内容を表示
         st.markdown(f"#### {row['市区町丁']}")
         st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（{total_entries} 件中 {idx + 1} 位）")
-        st.markdown(f"- **街灯の数**：{row['街灯の数'] if not pd.isna(row['街灯の数']) else 'データ無し'}")
-        st.markdown(f"- **騒音の平均値**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
-        st.markdown(f"- **避難所の数**：{row['避難所の数'] if not pd.isna(row['避難所の数']) else 'データ無し'}")
+        streetlights = int(row['街灯の数']) if not pd.isna(row['街灯の数']) else 'データ無し'
+        st.markdown(f"- **街灯の数**：{streetlights}")
+        st.markdown(f"- **騒音の平均値(dB)**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
+        sevacuation_centers = int(row['避難所の数']) if not pd.isna(row['避難所の数']) else 'データ無し'
+        st.markdown(f"- **避難所の数**：{evacuation_centers}")
         st.markdown("---")
 
