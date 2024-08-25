@@ -296,17 +296,18 @@ def map_environmental_scores(map, df_score):
         ).add_to(map)
     return map
 
-
-###実際にマップを描画
-## (手法A)Streamlitの件数
+###ポリゴン生成（選択した板橋区）
+## (手法A)固定
 # map = map_crime(map, df_hanzai[:1])
 
-## (手法B)Streamlitでデータフレームの行数を選択
+##（手法A'）板橋区全選択※API上限エラー
+# filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
+
+## (手法B)表示件数選択
 # num_records = st.slider("表示する犯罪記録の数を選択してください：", min_value=1, max_value=len(df_hanzai), value=1)
 # map = map_crime(map, df_hanzai[:num_records])
 
-## (手法C)Streamlitで市区町丁を選択
-# Streamlitでデータフレームの市区町丁のリストを取得（板橋区のみ選択）
+## (手法C)板橋区の市区町丁を選択
 fil_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 cho_list = fil_df['市区町丁'].unique().tolist()
 selected_cho = st.multiselect(
@@ -316,17 +317,6 @@ selected_cho = st.multiselect(
 )
 filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
 
-# 左右のカラムを作成
-col1, col2 = st.columns([2, 3])
-# フィルタリングされたDataFrameを右側のカラムに表示
-with col2:
-    st.markdown("### 選択された住所の情報")
-    st.dataframe(filtered_df.style.highlight_max(axis=0))  # スタイリング例
-
-
-
-##（手法D）板橋区全選択※上限エラー
-# filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
 
 ###マッピング
 map = map_crime(map, filtered_df)
@@ -334,6 +324,10 @@ map = map_noise(map, df_R4)
 map = map_lights(map, df_gaitou)
 map = map_fixed_circles(map, df_hinanjo)
 map = map_environmental_scores(map, df_score)
-with col1:
-    # Streamlitでマップを表示する
-    folium_static(map, width=725, height=500)
+# Streamlitでマップを表示する
+folium_static(map, width=725, height=500)
+
+
+# 板橋区の市区町丁のDataFrameを表示
+st.markdown("### 可視化住所の詳細")
+st.dataframe(filtered_df.style.highlight_max(axis=0)) 
