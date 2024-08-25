@@ -158,12 +158,10 @@ def map_crime(map, df):
   for index, row in df.iterrows():
     address = row['市区町丁']
     crime = row['総合計']
-
     # ポリゴン情報を取得
     polygon, latitude, longitude = get_polygon_for_address(address)
     if polygon is np.nan or latitude is np.nan or longitude is np.nan:
       continue
-
     # ポリゴンを地図上に表示
     style_function = lambda x: {
       'fillColor': 'purple',
@@ -171,7 +169,6 @@ def map_crime(map, df):
       'weight': 1.5 # エッジの太さ
     }
     folium.GeoJson(polygon, style_function=style_function).add_to(map)
-
     # 文字列を表示するカスタムアイコンを定義
     html = f'<div style="font-size: 10pt; color: gray; width: 300px;">住所エリア : {address}<br><br>犯罪件数 : {crime}</div>'
     folium.Marker(
@@ -187,7 +184,7 @@ def map_crime(map, df):
 
   return map
 
-# 騒音データを地図にプロットする関数
+### 騒音
 def map_noise(map, df_R4):
   for index, row in df_R4.iterrows():
     # 住所情報
@@ -215,7 +212,7 @@ def map_noise(map, df_R4):
 
   return map
 
-# 街灯データを地図にプロットする関数
+###街灯
 def map_lights(map, df_gaitou):
     value = 15  # とりあえず街灯は固定値
     for index, row in df_gaitou.iterrows():
@@ -240,7 +237,7 @@ def map_lights(map, df_gaitou):
 
 import folium
 
-# 避難所
+### 避難所
 def map_fixed_circles(map, df_hinanjo):
     for index, row in df_hinanjo.iterrows():
         value = 80  # サークルの固定値
@@ -303,16 +300,18 @@ def map_environmental_scores(map, df_score):
 # map = map_crime(map, df_hanzai[:num_records])
 
 ## (手法C)Streamlitで市区町丁を選択
-# Streamlitでデータフレームの市区町丁のリストを取得
+# Streamlitでデータフレームの市区町丁のリストを取得（板橋区のみ選択）
+# filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
+# cho_list = filtered_df['市区町丁'].unique().tolist()
+# selected_cho = st.multiselect(
+#     "可視化する住所を選択してください（α版は板橋区のみ）：",
+#     cho_list,
+#     default=cho_list[:1]
+# )
+# filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
+
+##（手法D）板橋区全選択
 filtered_df = df_hanzai[df_hanzai['市区町丁'].str.contains('板橋区')]
-cho_list = filtered_df['市区町丁'].unique().tolist()
-# cho_list = df_hanzai['市区町丁'].unique().tolist()
-selected_cho = st.multiselect(
-    "可視化する住所を選択してください（α版は板橋区のみ）：",
-    cho_list,
-    default=cho_list[:1]
-)
-filtered_df = df_hanzai[df_hanzai['市区町丁'].isin(selected_cho)]
 
 ###マッピング
 map = map_crime(map, filtered_df)
