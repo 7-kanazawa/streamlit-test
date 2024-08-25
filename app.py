@@ -15,7 +15,7 @@ from streamlit_folium import folium_static
 
 # サイドバーに画像を表示
 st.sidebar.image(
-    'data/hanrei.png',  # 画像ファイルのパス
+    'data/hanrei.jpg',  # 画像ファイルのパス
     caption='サイドバーの画像キャプション',  # 画像にキャプションをつける（任意）
     use_column_width=True  # 画像の幅をサイドバーの幅に合わせる
 )
