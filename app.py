@@ -335,10 +335,10 @@ df_syousai= df_score[df_score['市区町丁'].isin(selected_cho)]
 # 住環境スコアの降順でソート
 sorted_df = df_syousai.sort_values(by='env_score_normal', ascending=False).reset_index(drop=True)
 for idx, row in sorted_df.iterrows():
-    st.markdown(f"### 選択住所：{row['市区町丁']}（選択住所の中でスコア {idx + 1} 位）")
-    st.markdown(f"- **住環境スコア**：{row['env_score_normal']} ")
-    st.markdown(f"- **街灯の数**：{row['街灯の数']}")
-    st.markdown(f"- **騒音の平均値**：{row['騒音の平均値']}")
-    st.markdown(f"- **避難所の数**：{row['避難所の数']}")
+    st.markdown(f"## {row['市区町丁']}")
+    st.markdown(f"- **住環境スコア**：{row['env_score_normal']}（選択住所の中でスコア {idx + 1} 位） ")
+    st.markdown(f"- **街灯の数**：{row['街灯の数'] if not pd.isna(row['街灯の数']) else 'データ無し'}")
+    st.markdown(f"- **騒音の平均値**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
+    st.markdown(f"- **避難所の数**：{row['避難所の数'] if not pd.isna(row['避難所の数']) else 'データ無し'}")
     st.markdown("---") 
 
