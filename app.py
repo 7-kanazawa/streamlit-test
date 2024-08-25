@@ -25,7 +25,7 @@ st.info("TOLES α版")
 # df_hanzai = df_hanzai[~df_hanzai['市区町丁'].isin(["区計","市計"])][['市区町丁','総合計']]
 
 ##犯罪データ変更後
-df_hanzai.to_csv('./data/df_hanzai_add_nearby_loc_add_hinanjo.csv', encoding='cp932', index=False)
+df_hanzai = pd.read_csv('./data/df_hanzai_add_nearby_loc_add_hinanjo.csv', encoding='cp932')
 
 ##街灯データ
 df_gaitou = pd.read_csv('./data/LED_街灯_2021作成データ.csv', encoding='sjis')
