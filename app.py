@@ -253,12 +253,12 @@ def map_fixed_circles(map, df_hinanjo):
         ).add_to(map)
 
         # 文字列を表示するカスタムアイコンを定義
-        html = f'<div style="font-size: 10pt; color: aqua;">サークル半径 : {value}</div>'
-        folium.Marker(
-            [row['LATITUDE'], row['LONGITUDE']],
-            icon=folium.Icon(color='lightblue'),
-            popup=html
-        ).add_to(map)
+        # html = f'<div style="font-size: 10pt; color: aqua;">サークル半径 : {value}</div>'
+        # folium.Marker(
+        #     [row['LATITUDE'], row['LONGITUDE']],
+        #     icon=folium.Icon(color='lightblue'),
+        #     popup=html
+        # ).add_to(map)
     return map
 
 import folium
