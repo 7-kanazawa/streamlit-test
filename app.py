@@ -32,6 +32,11 @@ df_gaitou = df_gaitou.iloc[:4000:5]#全4121件、処理重いので一旦800件�
 df_R4 = pd.read_csv('./data/自動車_常時監視測定地点_令和4年_add_location.csv', encoding='cp932')
 df_R4 = df_R4[df_R4['測定地点の住所'].str.contains('千代田区|中央区|港区|板橋区|練馬区')]
 
+# 板橋区_避難所データ
+df_hinanjo = pd.read_csv('./data/避難所/板橋区_避難所データ.csv', encoding='cp932')
+df_hinanjo = df_hinanjo[['施設名','緯度','経度']]
+df_hinanjo = df_hinanjo.rename({'緯度':'LATITUDE', '経度':'LONGITUDE'}, axis=1)
+
 ###1.住所から緯度経度情報を取得する
 import random
 from geopy.geocoders import Nominatim
