@@ -57,28 +57,44 @@ def safe_literal_eval(value):
         return None
 
 ###0.住環境スコア化
+# import ast
+# def get_each_score(row):
+#     try:
+#         list_lamp = ast.literal_eval(row['nearby_locat_街灯'])
+#     except (ValueError, SyntaxError) as e:
+#         list_lamp = []
+#     len_hinanjo = len(row['nearby_locat_避難所'])    
+#     try:
+#         list_noise = ast.literal_eval(row['noise_levels'])
+#         if isinstance(list_noise, list) and len(list_noise) > 0:
+#             list_noise = list_noise[0]
+#         else:
+#             list_noise = []
+#     except (ValueError, SyntaxError, IndexError) as e:
+#         list_noise = []
+    
+#     if list_noise and isinstance(list_noise, list) and len(list_noise) > 0:
+#         avg_noise_level = sum(list_noise) / len(list_noise)
+#     else:
+#         avg_noise_level = np.nan
+#     return [len(list_lamp), avg_noise_level, len_hinanjo]
+# df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+
 import ast
 def get_each_score(row):
-    try:
-        list_lamp = ast.literal_eval(row['nearby_locat_街灯'])
-    except (ValueError, SyntaxError) as e:
-        list_lamp = []
-    len_hinanjo = len(row['nearby_locat_避難所'])    
-    try:
-        list_noise = ast.literal_eval(row['noise_levels'])
-        if isinstance(list_noise, list) and len(list_noise) > 0:
-            list_noise = list_noise[0]
-        else:
-            list_noise = []
-    except (ValueError, SyntaxError, IndexError) as e:
-        list_noise = []
-    
-    if list_noise and isinstance(list_noise, list) and len(list_noise) > 0:
-        avg_noise_level = sum(list_noise) / len(list_noise)
-    else:
-        avg_noise_level = np.nan
-    return [len(list_lamp), avg_noise_level, len_hinanjo]
-df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+  list_lamp = ast.literal_eval(row['nearby_locat_街灯']) # 格納リストが文字列なのでリスト形式に変換
+  len_hinanjo = len(ast.literal_eval(row['nearby_locat_避難所']))
+  if row['noise_levels']== "[nan]":
+    list_noise = np.nan
+  else:
+    list_noise = ast.literal_eval(row['noise_levels'])[0]
+  if isinstance(list_noise, float) and np.isnan(list_noise):
+    avg_noise_level = np.nan
+  else:
+    avg_noise_level = sum(list_noise) / len(list_noise)
+  return [len(list_lamp), avg_noise_level, len_hinanjo]
+df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.progress_apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+
 
 # ---------------------
 # 正規化
