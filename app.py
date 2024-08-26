@@ -93,7 +93,7 @@ def get_each_score(row):
   else:
     avg_noise_level = sum(list_noise) / len(list_noise)
   return [len(list_lamp), avg_noise_level, len_hinanjo]
-df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.progress_apply(lambda x: pd.Series(get_each_score(x)), axis=1)
+df_hanzai[['街灯の数', '騒音の平均値', '避難所の数']] = df_hanzai.apply(lambda x: pd.Series(get_each_score(x)), axis=1)
 
 
 # ---------------------
