@@ -370,8 +370,8 @@ for idx, row in sorted_df.iterrows():
         st.markdown(f"- **街灯の数**：{streetlights}")
         st.markdown(f"- **騒音の平均値(dB)**：{row['騒音の平均値'] if not pd.isna(row['騒音の平均値']) else 'データ無し'}")
         evacuation_centers = int(row['避難所の数']) if not pd.isna(row['避難所の数']) else 'データ無し'
-        # st.markdown(f"- **避難所の数**：{evacuation_centers}")
-        # st.markdown("---")
+        st.markdown(f"- **避難所の数**：{evacuation_centers}")
+        st.markdown("---")
 
 # st.dataframe(df_hanzai)
 # st.dataframe(df_syousai)
