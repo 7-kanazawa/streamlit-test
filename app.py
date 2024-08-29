@@ -349,7 +349,7 @@ map = map_environmental_scores(map, df_score)
 # Streamlitでマップを表示する
 folium_static(map, width=None, height=500)#ワイド版でない時は725
 
-st.dataframe(df_hanzai)
+# st.dataframe(df_hanzai)
 
 ### 選択した板橋区の市区町丁の詳細情報
 df_syousai= df_score[df_score['市区町丁'].isin(selected_cho)]
@@ -405,7 +405,7 @@ for idx, row in sorted_df.iterrows():
 #         st.markdown(f"- **避難所の数**：{evacuation_centers}")
 #         st.markdown("---")
 
-# st.dataframe(df_hanzai)
-# st.dataframe(df_syousai)
+st.dataframe(df_hanzai)
+st.dataframe(df_syousai)
 
 
