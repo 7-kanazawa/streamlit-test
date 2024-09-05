@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import folium
+import fiona
 import matplotlib
 import matplotlib.pyplot as plt
 import japanize_matplotlib
