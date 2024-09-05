@@ -14,5 +14,4 @@ geoplot==0.5.1
 geopy==2.4.1
 geoviews==1.11.0
 Shapely==1.8.5.post1
-geopandas==0.9.0
 fiona==1.8.19
