@@ -16,6 +16,13 @@ import os
 
 # キャッシュをクリアするコード
 # st.experimental_memo.clear()
+print("*********************")
+print("*********************")
+print("*********************")
+print(f"Fiona version: {fiona.__version__}")
+print("*********************")
+print("*********************")
+print("*********************")
 
 # ページ設定
 st.set_page_config(layout="wide")
