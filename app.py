@@ -12,6 +12,7 @@ import warnings
 warnings.filterwarnings("ignore", category=FutureWarning)
 import streamlit as st
 from streamlit_folium import folium_static
+import os
 
 # ページ設定
 st.set_page_config(layout="wide")
