@@ -20,7 +20,7 @@ import os
 print("*********************")
 print("*********************")
 print("*********************")
-print(f"Fiona version: {fiona.__version__}")
+print(f"Fiona version: {fiona.__version__}")#Fiona version: 1.10.0
 print("*********************")
 print("*********************")
 print("*********************")
