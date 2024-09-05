@@ -155,7 +155,9 @@ import geopandas as gpd
 from shapely.geometry import Point
 # gdf = gpd.read_file('./data/r2ka13.shp')
 
-file_path = './data/r2ka13.shp'
+# 絶対パスでファイルを指定
+file_path = os.path.abspath('./data/r2ka13.shp')
+# ファイルが存在するか確認
 if os.path.exists(file_path):
     gdf = gpd.read_file(file_path)
 else:
