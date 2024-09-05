@@ -152,8 +152,7 @@ def get_coordinates(address):
 # GISデータから市区町村の境界データを取得
 import geopandas as gpd
 from shapely.geometry import Point
-# gdf = gpd.read_file('./data/r2ka13.shp')
-gdf = gpd.read_file('/data/r2ka13.shp')
+gdf = gpd.read_file('./data/r2ka13.shp')
 
 ### 3. 住所が含まれる地域のポリゴンを抽出
 def get_polygon_for_address(address):
