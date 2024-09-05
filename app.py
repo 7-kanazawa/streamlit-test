@@ -15,7 +15,7 @@ from streamlit_folium import folium_static
 import os
 
 # キャッシュをクリアするコード
-st.experimental_memo.clear()
+# st.experimental_memo.clear()
 
 # ページ設定
 st.set_page_config(layout="wide")
